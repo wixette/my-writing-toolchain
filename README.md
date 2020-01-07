@@ -22,6 +22,8 @@
 1. 用 Markdown 超快，超简单。没有像 Word 一样繁琐的格式、样式设定来分散精力，就可以把更多的有效时间放在内容创作上。
 1. 用 Markdown 很酷，自我感觉很好。
 
+![Markdown 示例](https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/markdown_format.png | width=800)
+
 不熟悉 Markdown 的，推荐阅读知乎问题[“怎样引导新手使用 Markdown？”下的高票回答](https://www.zhihu.com/question/20409634)。
 
 ## 编辑器
