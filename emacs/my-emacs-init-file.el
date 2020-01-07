@@ -1,8 +1,3 @@
-(require 'package)
-(package-initialize)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-
 ;; Set the command (Apple) key as Meta
 (setq mac-command-modifier 'meta)
 
