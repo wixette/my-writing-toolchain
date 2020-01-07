@@ -10,6 +10,9 @@
 
 ### 中文 Markdown 的换行问题
 
+markdown-cjk
+
+pandoc east asian extension
 
 ## 编辑器
 
@@ -19,9 +22,7 @@ Emacs
 
 ## Git 版本管理
 
-
 ## Diff 版本比较
-
 
 ## 发布
 
