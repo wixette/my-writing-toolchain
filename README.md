@@ -74,7 +74,7 @@ pandoc -f markdown_strict+east_asian_line_breaks input.md
 
 任何一个用着顺手，能编辑纯文本的编辑器都可以胜任 Markdown 格式的写作。Windows、MacOS、Linux 等操作系统上的记事本，网页里的编辑框，各种在线文档类的笔记工具、写作平台、微信小程序，手机上的记事本，都能圆满完成写作工作。当然，对程序员来说最理想的还是那些平常用来写程序的工具软件。
 
-传统程序员有两大“宗教”——VIM 和 Emacs。我是 Emacs 党，但从不说 VIM 的坏话。所以，用 VIM 写作还是用 Emacs 写作，完全看大家的心情就好。最近我还比较喜欢超轻量级的 nano，做些短平快的事情特别合适。Windows 上的 Notepad++ 也很棒。其他诸如 VS Code、Eclipse、Xcode 之类，都显得略重了些，不过也足以胜任写作任务。
+传统程序员有两大“宗教”——Vim 和 Emacs。我是 Emacs 党，但从不说 Vim 的坏话。所以，用 Vim 写作还是用 Emacs 写作，完全看大家的心情就好。最近我还比较喜欢超轻量级的 nano，做些短平快的事情特别合适。Windows 上的 Notepad++ 也很棒。其他诸如 VS Code、Eclipse、Xcode 之类，都显得略重了些，不过也足以胜任写作任务。
 
 各种代码编辑器都能针对 Markdown 中的不同类型内容，用不同颜色或字体显示。我在 Emacs 里会缺省安装并打开 [markdown-mode](https://jblevins.org/projects/markdown-mode/)。
 
@@ -116,7 +116,7 @@ Github 网页版使用的 diff 工具稍好一些，可以在段内不换行的�
 
 <img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/github_diff.png" width=800>
 
-Git 和 Github 的 diff 工具在粒度上是无法满足中文写作的要求的。有不少好的 diff 工具可以在更细的粒度上对文本内容进行比较。其中有一些是收费的商业产品。免费的工具里，我自己简单使用 Google 开源的 diff-match-patch 代码库，并在这个代码库的基础上包装了一个 Python 命令行小工具，叫 [googdiff](https://github.com/wixette/my-writing-toolchain/tree/master/googdiff)。
+Git 和 Github 的 diff 工具在粒度上是无法满足中文写作的要求的。有不少好的 diff 工具可以在更细的粒度上对文本内容进行比较。其中有一些是收费的商业产品。免费的工具里，我自己简单使用 Google 开源的 [diff-match-patch](https://github.com/google/diff-match-patch) 代码库，并在这个代码库的基础上包装了一个 Python 命令行小工具，叫 [googdiff](https://github.com/wixette/my-writing-toolchain/tree/master/googdiff)。
 
 这个工具可以单独使用，也可以嵌入 Git 命令行使用。要安装这个工具，可以使用 pip：
 
