@@ -112,7 +112,7 @@ pandoc -f markdown_strict+east_asian_line_breaks input.md
 
 管理不同版本时，查看两个或多个版本之间的差异是程序员最熟悉的任务之一。但查看两份代码的差异，和查看两个版本中文文章间的差异，还是挺不一样的两件事。代码的基本单元是“行”和“符号”，而中文文章的基本单元是“段”“句”“词”“字”。比较两个版本的代码时，大多数时候都是一行对一行的比较。而比较两个版本中文文章时，一段对一段的比较显得跨度太大，很难理清楚其中的差异。比如，对下面这个版本修改，Git 缺省的 diff 工具只能笼统显示两段是不同的，无法更进一步显示两段之间哪里不同：
 
-<img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/git_diff.png width="400">
+<img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/git_diff.png" width="400">
 
 Github 网页版使用的 diff 工具稍好一些，可以在段内不换行的中文里找出一些具体的差异位置，但这些差异仍然没有具体到能体现最小区别的字词级别，例如两个版本第一句话中本来只有“示例”和“测试”的区别，但 Github 用深红、深绿标注的差异部分却扩大到了“示例的中文文本”和“测试的中文文本”。至于分行的中文段落，Github diff 就更是无法区分其中的差异位置了。见下图：
 
