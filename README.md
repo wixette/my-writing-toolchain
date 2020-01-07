@@ -1,28 +1,40 @@
-# My Writing Toolchain 我的中文写作工具链
+# 我的中文写作工具链
 
-**The toolchain that makes my writing tasks efficient.**
+## 工具驱动的中文写作
+
+在社交 APP 里，我有个签名是“用 Emacs 写小说”。很多人问我，你怎么用 Emacs 写小说？
+
+写代码是我的工作，中文写作则是我的爱好。代码之外，我写作或发表过技术文章、技术图书、科普图书、科幻小说、散文、诗歌等等。水平并不高明，但从写代码继承过来的习惯还是让我在技术上有别于主要用稿纸或 Word 写作的人。所谓“用 Emacs 写小说”只是个笼统的说法，其实我是在用一系列写代码时常用的软件工具来完成整个中文写作流程。原因很简单，这样做效率更高！
+
+记得八九十年代的作家常说“换笔”，那时是要把真的纸笔替换成可以打字的电脑。今天如果有人想“换”更厉害的笔，那我会推荐这套高效率的中文写作工具链——当然，前提是你要会像码农一样摆弄些电脑上的命令行工具。
 
 ## Markdown 格式
 
-我使用 Markdown 格式来完成大多数中文写作任务。少数需要复杂图表的情况，
-直接使用办公软件如 Microsoft Word。还有一部分情况会先用 Markdown 格式
-打草稿，然后再转入 Word 环境完成图表加工等高级任务。
+我很少用 Word 或 WPS 写作。更多时候（包括写这篇文章在内）是在一个最简单的文本编辑器里写 Markdown 格式的纯文本。少数情况下，我会先用 Markdown 格式打草稿，然后再转入办公软件的环境完成图表等高级任务。
 
-### 中文 Markdown 的换行问题
+和使用 Office 等体量巨大的办公软件相比，使用 Markdown 格式写作的好处有很多：
 
-markdown-cjk
-
-pandoc east asian extension
+1. Markdown 随时随地都可以写，在电脑记事本里写，在手机 APP 里写，在微信里写，在 iPad 上写，在 Github 等网页工具上写，在编程工具里写，在服务器终端里写，在树莓派这样的廉价计算机里写……不是任何地方都能免费、快速打开 Word 软件的。
+1. 用 Markdown 格式写出来的东西，可以方便地用版本管理系统如 Git 管理起来，可以方便地在 Github 上管理，可以迅速同步到随手拿起的各种写作设备上。想一想我们用 Git 管理体量巨大的 Word 文件有多麻烦。
+1. 用 Markdown 格式写出来的东西，可以方便地比较两个版本之间的差别。想一想我们用 Word 比较两个版本差别时有多折腾。
+1. 用 Markdown 很快，很简洁。繁琐的格式设定不会分散你的经历，让你有更多的有效时间来创作最好的文字内容。
+1. 用 Markdown 很酷，与众不同。
 
 ## 编辑器
 
 Emacs
 
-### Unicode 支持
+Emacs Markdown mode: https://jblevins.org/projects/markdown-mode/
 
 ## Git 版本管理
 
 ## Diff 版本比较
+
+## 中文 Markdown 的换行问题
+
+markdown-cjk
+
+pandoc east asian extension
 
 ## 发布
 
