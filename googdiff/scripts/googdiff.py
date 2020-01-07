@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Command-line diff tool, an wrapper of Google's diff-match-patch module.
+"""Command-line diff tool, a wrapper of Google's diff-match-patch module.
 """
 
 import argparse
