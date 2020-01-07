@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='googdiff',
-    version='0.2.2',
+    version='0.2.3',
     author='wixette',
     author_email='wixette@gmail.com',
     description='A wrapper of Google\'s diff-match-patch module.',
@@ -21,5 +21,6 @@ setuptools.setup(
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
         'Topic :: Software Development',
-    ]
+    ],
+    python_requires='>=3.6',
 )

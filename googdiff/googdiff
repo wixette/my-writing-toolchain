@@ -9,7 +9,7 @@ import webbrowser
 from diff_match_patch import diff_match_patch
 
 
-DIFF_HTML_TMP = '''
+DIFF_HTML_TMP = u'''
 <!doctype html>
 <html>
 <head>
@@ -18,13 +18,13 @@ DIFF_HTML_TMP = '''
 body{font-family:"Lucida Console",Monaco,"Courier New",Courier, monospace;
 font-size:14px;padding:20px;}
 h1{font-size:14px;border-bottom:#ccc solid 1px;margin-bottom:20px;}
-pre{font-family:"Lucida Console",Monaco,"Courier New",Courier, monospace;
+p{font-family:"Lucida Console",Monaco,"Courier New",Courier, monospace;
 font-size:14px;line-height:22px;}
 </style>
 </head>
 <body>
 <h1>diff between "%(file1)s" and "%(file2)s"</h2>
-<pre>%(text)s</pre>
+<p>%(text)s</p>
 </body>
 </html>
 '''
@@ -41,18 +41,21 @@ def main():
 
     googdiff = diff_match_patch()
     googdiff.Diff_Timeout = args.timeout
-    text1 = open(path1).read()
-    text2 = open(path2).read()
+    text1 = open(path1, mode='r', encoding='utf-8').read()
+    text2 = open(path2, mode='r', encoding='utf-8').read()
     diff = googdiff.diff_main(text1, text2, False)
     googdiff.diff_cleanupSemantic(diff)
 
     diff_html_span = googdiff.diff_prettyHtml(diff)
 
     diff_out = DIFF_HTML_TMP % dict(text=diff_html_span,
-                               file1=path1,
-                               file2=path2)
+                                    file1=path1,
+                                    file2=path2)
     if args.view_in_browser:
-        with tempfile.NamedTemporaryFile('w', suffix='.html', delete=False) as temp_file:
+        with tempfile.NamedTemporaryFile('w',
+                                         encoding='utf-8',
+                                         suffix='.html',
+                                         delete=False) as temp_file:
             temp_file.write(diff_out)
         webbrowser.open('file://%s' % temp_file.name)
     else:
