@@ -14,12 +14,14 @@ use strict;
 use warnings;
 
 use Digest::MD5 qw(md5_hex);
+use Encode qw(encode_utf8);
 use vars qw($VERSION);
 $VERSION = '1.0.1';
 # Tue 14 Dec 2004
 
 ## Disabled; causes problems under Perl 5.6.1:
-# use utf8;
+use utf8;
+use encoding 'utf8';
 # binmode( STDOUT, ":utf8" );  # c.f.: http://acis.openlib.org/dev/perl-unicode-struggle.html
 
 
@@ -345,7 +347,7 @@ sub _HashHTMLBlocks {
 					(?=\n+|\Z)	# followed by a newline or end of document
 				)
 			}{
-				my $key = md5_hex($1);
+				my $key = md5_hex(encode_utf8($1));
 				$g_html_blocks{$key} = $1;
 				"\n\n" . $key . "\n\n";
 			}egmx;
@@ -365,7 +367,7 @@ sub _HashHTMLBlocks {
 					(?=\n+|\Z)	# followed by a newline or end of document
 				)
 			}{
-				my $key = md5_hex($1);
+				my $key = md5_hex(encode_utf8($1));
 				$g_html_blocks{$key} = $1;
 				"\n\n" . $key . "\n\n";
 			}egmx;
@@ -387,7 +389,7 @@ sub _HashHTMLBlocks {
 					(?=\n{2,}|\Z)		# followed by a blank line or end of document
 				)
 			}{
-				my $key = md5_hex($1);
+				my $key = md5_hex(encode_utf8($1));
 				$g_html_blocks{$key} = $1;
 				"\n\n" . $key . "\n\n";
 			}egx;
@@ -410,7 +412,7 @@ sub _HashHTMLBlocks {
 					(?=\n{2,}|\Z)		# followed by a blank line or end of document
 				)
 			}{
-				my $key = md5_hex($1);
+				my $key = md5_hex(encode_utf8($1));
 				$g_html_blocks{$key} = $1;
 				"\n\n" . $key . "\n\n";
 			}egx;
@@ -452,6 +454,35 @@ sub _RunBlockGamut {
 }
 
 
+sub _DebreakCjkLines {
+  #
+  # A line that ends with CJK character should be merged with its
+  # following line that begins with CJK character, otherwise, there
+  # will be a whitespace rendered in HTML paragraph.
+  #
+  my $text = shift;
+  my @lines = split(/\n/, $text);
+  my $last_line_ends_with_cjk = 0;
+  my @sb = ();
+  foreach my $line (@lines) {
+    if (scalar @sb > 0) {
+      if (!$last_line_ends_with_cjk or
+          $line !~ /^(\p{InCJKUnifiedIdeographs}|\p{InCJKUnifiedIdeographsExtensionA}|\p{InCJKUnifiedIdeographsExtensionB}|\p{P})/) {
+        push @sb, ("\n");
+      }
+    }
+    push @sb, ($line);
+    if ($line =~ /(\p{InCJKUnifiedIdeographs}|\p{InCJKUnifiedIdeographsExtensionA}|\p{InCJKUnifiedIdeographsExtensionB}|\p{P})$/) {
+      $last_line_ends_with_cjk = 1;
+    } else {
+      $last_line_ends_with_cjk = 0;
+    }
+  }
+  $text = join "", @sb;
+  return $text;
+}
+
+
 sub _RunSpanGamut {
 #
 # These are all the transformations that occur *within* block-level
@@ -479,6 +510,9 @@ sub _RunSpanGamut {
 
 	# Do hard breaks:
 	$text =~ s/ {2,}\n/ <br$g_empty_element_suffix\n/g;
+
+        # Debreak CJK lines.
+	$text = _DebreakCjkLines($text);
 
 	return $text;
 }
