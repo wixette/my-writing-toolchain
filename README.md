@@ -40,25 +40,25 @@
 之，机事不密，反为所害，中涓自此愈横。
 ```
 
-两种写法没有优劣之分。我个人偏爱每段之中换行的写法，这样整个 Markdown 里的中文段落整齐划一，在各个编辑器、各个平台、各种尺寸屏幕上都能正常显示。很多编辑器都支持边写作边自动换行并对齐每行字数，比如我在 Emacs 边写边按 M-q (fill-paragraph)，就可以自动将段落分行且各行填满固定字数。
+两种写法没有优劣之分。我个人偏爱每段之中换行的写法，这样整个 Markdown 里的中文段落整齐划一，在各个编辑器、各个平台、各种尺寸屏幕上都能正常显示。这种写法也便于快速定位每个具体字词在编辑器里的行号、列号。现在很多编辑器都支持边写作边自动换行，并按照每行的固定字数来自动排列内容。比如我在 Emacs 边写边按 M-q (fill-paragraph)，就可以自动将段落分行且各行填满固定字数。
 
 ### Markdown 中文段内换行在输出时会多一个空格的问题
 
 使用上面说的中文段内换行的写作方式，在将 Markdown 输出成 HTML、PDF、Word 等文件时，会存在一个恼人的问题：输出后的文件在将多行显示为一个段落时，会在行与行之间自动插入一个空格。其实这是 HTML 处理多行连续文本的一个历史问题，完全是针对英文的使用习惯设计的，因为英文上一行结尾的单词和下一行开头的单词，需要用一个空格来分开。
 
-在 Github 上写 REAMDE.md 时，如果每段的中文分行来写，Github 一样会将这样的中文段落渲染成中间有空格的样子。这是今天 Github 上很多中文描述文件长得不太好看的原因之一。所以，这一篇 README.md，因为要在 Github 上展示，我也只好放弃了我钟爱的段间分行样式。
+在 Github 上写 REAMDE.md 时，如果每段的中文分行来写，Github 一样会将这样的中文段落渲染成中间有空格的样子。这是今天 Github 上很多中文描述文件长得不太好看的原因之一。所以，这一篇 README.md 因为要在 Github 上展示，我也被迫放弃了我钟爱的段间分行样式。
 
-那么，段间分行的中文文本，该如何正确输出到 HTML、PDF、Word 等格式呢？我目前使用两个方案：
+那么，段间分行的中文 Markdown 文本，该如何正确输出到 HTML、PDF、Word 等格式呢？我目前使用两个方案：
 
-#### 解决方案 1
+#### 方案 1
 
-我曾在 Markdown 作者最早发布的 Perl 脚本工具 [Markdown.pl 1.0.1](https://daringfireball.net/projects/downloads/Markdown_1.0.1.zip) 的基础上，做了一个代码改动，使得 Markdown 解析器在遇到第一行尾和下一行首是中日韩全角字符的时候，自动删除两行之间的换行，这样就将同一段落的中文内容完美、不加空格地连接在一起了。同时，我也考虑了第一行尾或下一行首同时是英文半角字符的情况，这种情况下，换行（或最终渲染出来的空格）还是需要保留的。
+我曾在 Markdown 作者最早发布的 Perl 脚本工具 [Markdown.pl 1.0.1](https://daringfireball.net/projects/downloads/Markdown_1.0.1.zip) 的基础上，做了一个代码改动，使得 Markdown 解析器在遇到第一行尾和下一行首是中日韩全角字符的时候，自动删除两行之间的换行，这样就将同一段落的中文内容不加空格地连接在一起了。同时，我也考虑了第一行尾或下一行首同时是英文半角字符的情况，这种情况下，换行（或最终渲染出来的空格）还是需要保留的。
 
 我对 Markdown.pl 1.0.1 加以修改以支持中日韩全角字符的代码发布在 [markdown-cjk](https://github.com/wixette/my-writing-toolchain/tree/master/markdown_cjk)，其中也包括二者之间差异的 diff 文件。
 
 喜欢原生 Markdown.pl 的同学可以使用这个工具来处理分行的中文段落。
 
-#### 解决方案 2
+#### 方案 2
 
 今天流行的 Markdown 工具里，有少数几种通过插件的形式，可以正确（或近乎正确）地处理中日韩全角字符分行时的情况。其中我比较喜欢用的是 [pandoc](https://pandoc.org/)。使用 pandoc 时，可以通过一个名叫 `east_asian_line_breaks` 的插件来处理中文分行段落。
 
@@ -68,13 +68,13 @@
 pandoc -f markdown_strict+east_asian_line_breaks input.md
 ```
 
-大多数情况下，推荐使用 pandoc。但 pandoc 在处理行尾、行首有英文半角字符时的规则，可能和有些人的期望不符，这时可以尝试上面提到的 markdown-cjk。
+大多数情况下，推荐使用 pandoc。但 pandoc 在处理行尾、行首有英文半角字符时的规则，可能和有些人的期望不符，这时可以尝试上面提到的 `markdown-cjk`。
 
-## 编辑器
+## 文本编辑器
 
 任何一个用着顺手，能编辑纯文本的编辑器都可以胜任 Markdown 格式的写作。Windows、MacOS、Linux 等操作系统上的记事本，网页里的编辑框，各种在线文档类的笔记工具、写作平台、微信小程序，手机上的记事本，都能圆满完成写作工作。当然，对程序员来说最理想的还是那些平常用来写程序的工具软件。
 
-传统程序员有两大“宗教”——VIM 和 Emacs。我是 Emacs 党，但从不说 VIM 的坏话。所以，用 VIM 写作还是用 Emacs 写作，完全看心情。最近我还比较喜欢超轻量级的 nano，做些短平快的事情特别合适。Windows 上的 Notepad++ 也很棒。其他诸如 VS Code、Eclipse、Xcode 之类，都显得略重了些，不过也足以胜任写作任务。
+传统程序员有两大“宗教”——VIM 和 Emacs。我是 Emacs 党，但从不说 VIM 的坏话。所以，用 VIM 写作还是用 Emacs 写作，完全看大家的心情就好。最近我还比较喜欢超轻量级的 nano，做些短平快的事情特别合适。Windows 上的 Notepad++ 也很棒。其他诸如 VS Code、Eclipse、Xcode 之类，都显得略重了些，不过也足以胜任写作任务。
 
 各种代码编辑器都能针对 Markdown 中的不同类型内容，用不同颜色或字体显示。我在 Emacs 里会缺省安装并打开 [markdown-mode](https://jblevins.org/projects/markdown-mode/)。
 
@@ -84,7 +84,7 @@ pandoc -f markdown_strict+east_asian_line_breaks input.md
 
 ## Git 版本管理
 
-虽然 Word 提供了强大的版本修订功能，但用的人很少。据说在用 Word 写作的人里，90% 以上是用文件名来管理不同版本的，如下图：
+虽然 Word 提供了强大的版本修订功能，但用的人很少。据说在用 Word 写作的人里，95% 以上是用文件名来管理不同版本的，如下图：
 
 <img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/word_versions.png" width="400">
 
@@ -98,15 +98,17 @@ pandoc -f markdown_strict+east_asian_line_breaks input.md
 
 需要 Git 入门的，推荐知乎问题[GitHub 入门方法有哪些？](https://www.zhihu.com/question/29929269)下的高票答案。
 
-用了 Git，当然要接着用 Github——所谓的[全球最大同性交友网站](https://zhuanlan.zhihu.com/p/35618222)。以前 Github 是为开源社区服务的，所有免费进驻的个人项目都要开放给大家浏览或下载，这件事对于在创作时非常注意保密的内容创作者来说是不友好的。好在 Github 已经允许我们管理私有项目。当时传出这个好消息时，我第一时间就把我的所有个人写作内容移到了 Github 的私有项目里。
+用了 Git，当然要接着用 Github——所谓的[全球最大同性交友网站](https://zhuanlan.zhihu.com/p/35618222)。以前 Github 是为开源社区服务的，所有免费进驻的个人项目都要开放给大家浏览或下载，这件事对于在创作时非常注意保密的内容创作者来说是不友好的。好在 Github 已经允许我们管理私有项目，不需要每个项目都公开。当时传出这个好消息时，我第一时间就把所有个人写作内容移到了 Github 的私有项目里。使用 Github 的另一个好处是，所有写作内容都随时和云端同步，你从任何地方的任何一台设备上，都可以继续你的写作过程，不用带着 U 盘满世界跑。
 
-感谢 Github，宣传一下 Github 的吉祥物 [Octodex](https://octodex.github.com/)：
+感谢 Github，也顺便宣传一下 Github 的吉祥物 [Octodex](https://octodex.github.com/)：
 
 <img src="https://octodex.github.com/images/original.png" width="300">
 
-## Diff 版本差异比较以及 googdiff 小工具
+## Diff 版本差异比较
 
-管理不同版本时，查看两个或多个版本之间的差异是程序员最熟悉的任务之一。但查看两份代码的差异，和查看两个版本中文文章间的差异，还是挺不一样的两件事。代码的基本单元是“行”和“符号”，而中文文章的基本单元是“段”“句”“词”“字”。比较两个版本的代码时，大多数时候都是一行对一行的比较。而比较两个版本中文文章时，一段对一段的比较显得跨度太大，很难理清楚其中的差异。比如，对下面这个版本修改，Git 缺省的 diff 工具只能笼统显示两段是不同的，无法更进一步显示两段之间哪里不同：
+管理不同版本时，查看两个或多个版本之间的差异是程序员最熟悉的任务之一。但查看两份代码的差异，和查看两个版本中文文章间的差异，还是挺不一样的两件事。代码的基本单元是“行”和“符号”，而中文文章的基本单元是“段”“句”“词”“字”。比较两个版本的代码时，大多数时候都是一行对一行的比较。而比较两个版本中文文章时，一段对一段的比较显得跨度太大，很难理清楚其中的差异。
+
+比如，对下面这个版本改动，Git 缺省的 diff 工具只能笼统显示两段是不同的，无法更进一步显示两段之间哪里不同：
 
 <img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/git_diff.png" width="600">
 
@@ -114,7 +116,7 @@ Github 网页版使用的 diff 工具稍好一些，可以在段内不换行的�
 
 <img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/github_diff.png" width=800>
 
-Git 和 Github 的 diff 工具在粒度上是无法满足中文写作的要求的。有不少好的 diff 工具可以在更细的粒度上对文本内容进行比较。其中有一些是收费的商业产品。免费的工具里，我自己就简单使用 Google 开源的 diff-match-patch 代码库，并在这个代码库的基础上包装了一个 Python 命令行小工具，叫 [googdiff](https://github.com/wixette/my-writing-toolchain/tree/master/googdiff)。
+Git 和 Github 的 diff 工具在粒度上是无法满足中文写作的要求的。有不少好的 diff 工具可以在更细的粒度上对文本内容进行比较。其中有一些是收费的商业产品。免费的工具里，我自己简单使用 Google 开源的 diff-match-patch 代码库，并在这个代码库的基础上包装了一个 Python 命令行小工具，叫 [googdiff](https://github.com/wixette/my-writing-toolchain/tree/master/googdiff)。
 
 这个工具可以单独使用，也可以嵌入 Git 命令行使用。要安装这个工具，可以使用 pip：
 
@@ -141,7 +143,7 @@ git difftool -y --extcmd=googdiff
 git difftool -y --extcmd=googdiff after before -- samples/diff_example_chinese.txt
 ```
 
-googdiff 的比较结果与上面 Git 或 Github 的 diff 工具相比，就细化了很多，可以将每一处细小的改动用红色或绿色显示出来：
+googdiff 的比较结果与上面 Git 或 Github 的 diff 工具相比，就细化了很多，可以将每一处细小的改动用红色或绿色显示出来，如下图：
 
 <img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/googdiff1.png" width="600">
 
@@ -151,7 +153,11 @@ googdiff 的比较结果与上面 Git 或 Github 的 diff 工具相比，就细�
 
 ## 输出与发布
 
-将 Markdown 格式文本转换成 HTML、PDF、Word 等格式的工具很多，我个人还是比较喜欢用 [pandoc](https://pandoc.org/)。例如，用 pandoc 将本文转换成 HTML：
+将 Markdown 格式文本转换成 HTML、PDF、Word 等格式的工具很多，我个人还是比较喜欢用 [pandoc](https://pandoc.org/)。
+
+pandoc 的使用方式很简单，参见 [Getting started with pandoc](https://pandoc.org/getting-started.html) 或者知乎上的 [pandoc 话题](https://www.zhihu.com/topic/19862254/hot)。
+
+例如，用 pandoc 将本文转换成 HTML：
 
 ```
 pandoc README.md -o readme.html
@@ -163,8 +169,10 @@ pandoc README.md -o readme.html
 pandoc README.md -t docx -o readme.docx
 ```
 
-有了 HTML 或 Word 文档，后续就可以在网页设计软件或者办公软件里，对我们写好的文稿进行加工，添加更丰富的图表信息了。
+有了 HTML 或 Word 文档，后续就可以在网页设计软件、办公软件或排版软件里，对我们写好的文稿进行加工、补全、排版和发布了。
 
-pandoc 的使用方式很简单，参见 [Getting started with pandoc](https://pandoc.org/getting-started.html) 或者知乎上的 [pandoc 话题](https://www.zhihu.com/topic/19862254/hot)
+## 最后两句话
 
-祝大家写作愉快 :-)
+以上工具选择其实只是我的个人喜好。高效工作方式有很多，萝卜白菜各有所爱。
+
+有好用的工具，自然有高效率和好心情。祝大家写作愉快 :-)
