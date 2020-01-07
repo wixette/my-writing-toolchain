@@ -22,7 +22,7 @@
 1. 用 Markdown 超快，超简单。没有像 Word 一样繁琐的格式、样式设定来分散精力，就可以把更多的有效时间放在内容创作上。
 1. 用 Markdown 很酷，自我感觉很好。
 
-![Markdown 示例](https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/markdown_format.png)
+<img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/markdown_format.png" width="600">
 
 不熟悉 Markdown 的，推荐阅读知乎问题[“怎样引导新手使用 Markdown？”下的高票回答](https://www.zhihu.com/question/20409634)。
 
@@ -112,11 +112,11 @@ pandoc -f markdown_strict+east_asian_line_breaks input.md
 
 管理不同版本时，查看两个或多个版本之间的差异是程序员最熟悉的任务之一。但查看两份代码的差异，和查看两个版本中文文章间的差异，还是挺不一样的两件事。代码的基本单元是“行”和“符号”，而中文文章的基本单元是“段”“句”“词”“字”。比较两个版本的代码时，大多数时候都是一行对一行的比较。而比较两个版本中文文章时，一段对一段的比较显得跨度太大，很难理清楚其中的差异。比如，对下面这个版本修改，Git 缺省的 diff 工具只能笼统显示两段是不同的，无法更进一步显示两段之间哪里不同：
 
-<img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/git_diff.png" width="400">
+<img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/git_diff.png" width="600">
 
 Github 网页版使用的 diff 工具稍好一些，可以在段内不换行的中文里找出一些具体的差异位置，但这些差异仍然没有具体到能体现最小区别的字词级别，例如两个版本第一句话中本来只有“示例”和“测试”的区别，但 Github 用深红、深绿标注的差异部分却扩大到了“示例的中文文本”和“测试的中文文本”。至于分行的中文段落，Github diff 就更是无法区分其中的差异位置了。见下图：
 
-![github diff](https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/github_diff.png)
+<img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/github_diff.png" width=800>
 
 Git 和 Github 的 diff 工具在粒度上是无法满足中文写作的要求的。有不少好的 diff 工具可以在更细的粒度上对文本内容进行比较。其中有一些是收费的商业产品。免费的工具里，我自己就简单使用 Google 开源的 diff-match-patch 代码库，并在这个代码库的基础上包装了一个 Python 命令行小工具，叫 [googdiff](https://github.com/wixette/my-writing-toolchain/tree/master/googdiff)。
 
@@ -129,14 +129,29 @@ pip3 install googdiff
 安装后，可以用下面的命令行比较两个本地文件，googdiff 缺省会打开浏览器来展示比较结果：
 
 ```
-googdiff a.txt b.txt
+googdiff samples/diff_example_english_pair_01.txt samples/diff_example_english_pair_02.txt
 ```
 
 也可以将 googdiff 与 git 集成使用，即，用 googdiff 来展示 git diff 的结果，像这样：
 
 ```
+git difftool -y --extcmd=googdiff
 
 ```
+
+或者显示两个 tag 之间某个文件的版本变化：
+
+```
+git difftool -y --extcmd=googdiff after before -- samples/diff_example_chinese.txt
+```
+
+googdiff 的比较结果与上面 Git 或 Github 的 diff 工具相比，就细化了很多，可以将每一处细小的改动用红色或绿色显示出来：
+
+<img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/googdiff1.png" width="600">
+
+无论是完整的中文段落，还是分行写的中文段落，googdiff 都会尽量精确地展示其中的差异：
+
+<img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/googdiff2.png" width="600">
 
 ## 输出与发布
 
