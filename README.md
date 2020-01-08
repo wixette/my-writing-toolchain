@@ -31,20 +31,21 @@
 使用 Markdown 格式写作中文内容，自然段落有两种写作方式，一种是每段一行，中间不加换行/回车符，编辑器可以开启“自动折行”功能。另一种方式是段内换行，每行只写差不多固定数目的文字，中间加上换行/回车符。无论中间换行不换行，Markdown 的段与段之间都使用单独的空行隔开。比如下面这样每行大约 35 汉字（或 70 英文字符）的写法：
 
 ```
-话说天下大势，分久必合，合久必分。周末七国分争，并入于秦。及秦灭之后，
-楚、汉分争，又并入于汉。汉朝自高祖斩白蛇而起义，一统天下，后来光武中兴，
-传至献帝，遂分为三国。
+栖芒是对的。我真的见过栖芒，而且是在十年以前。
 
-推其致乱之由，殆始于桓、灵二帝。桓帝禁锢善类，崇信宦官。及桓帝崩，灵帝
-即位，大将军窦武、太傅陈蕃共相辅佐。时有宦官曹节等弄权，窦武、陈蕃谋诛
-之，机事不密，反为所害，中涓自此愈横。
+和栖芒握手时，我的大脑仿佛瞬间浸入了一泓清水，无数潜藏在记忆暗区的场景
+清晰地浮现在眼前。曾经被遗忘的记忆碎片，接二连三地回到大脑中负责长期记
+忆的区域。当然，也有另一种可能，就是自己骤然进入了一个可以循时间脉络回
+到记忆深处的平行宇宙。
+
+我想起了许多原本不该想起的细节。
 ```
 
 两种写法没有优劣之分。我个人偏爱每段之中换行的写法，这样整个 Markdown 里的中文段落整齐划一，在各个编辑器、各个平台、各种尺寸屏幕上都能正常显示。这种写法也便于快速定位每个具体字词在编辑器里的行号、列号。现在很多编辑器都支持边写作边自动换行，并按照每行的固定字数来自动排列内容。比如我在 Emacs 边写边按 M-q (fill-paragraph)，就可以自动将段落分行且各行填满固定字数。
 
 ### Markdown 中文段内换行在输出时会多一个空格的问题
 
-使用上面说的中文段内换行的写作方式，在将 Markdown 输出成 HTML、PDF、Word 等文件时，会存在一个恼人的问题：输出后的文件在将多行显示为一个段落时，会在行与行之间自动插入一个空格。其实这是 HTML 处理多行连续文本的一个历史问题，完全是针对英文的使用习惯设计的，因为英文上一行结尾的单词和下一行开头的单词，需要用一个空格来分开。
+使用上面说的中文段内换行的写作方式，在将 Markdown 输出成 HTML、PDF、Word 等文件时，会存在一个恼人的问题：输出后的文件在将多行显示为一个段落时，会在行与行之间自动插入一个空格。其实这是 HTML 处理多行连续文本的一个历史问题，完全是针对英文习惯设计的，因为英文上一行结尾的单词和下一行开头的单词，需要用一个空格来分开。
 
 在 Github 上写 REAMDE.md 时，如果每段的中文分行来写，Github 一样会将这样的中文段落渲染成中间有空格的样子。这是今天 Github 上很多中文描述文件长得不太好看的原因之一。所以，这一篇 README.md 因为要在 Github 上展示，我也被迫放弃了我钟爱的段间分行样式。
 
@@ -52,11 +53,11 @@
 
 #### 方案 1
 
-我曾在 Markdown 作者最早发布的 Perl 脚本工具 [Markdown.pl 1.0.1](https://daringfireball.net/projects/downloads/Markdown_1.0.1.zip) 的基础上，做了一个代码改动，使得 Markdown 解析器在遇到第一行尾和下一行首是中日韩全角字符的时候，自动删除两行之间的换行，这样就将同一段落的中文内容不加空格地连接在一起了。同时，我也考虑了第一行尾或下一行首同时是英文半角字符的情况，这种情况下，换行（或最终渲染出来的空格）还是需要保留的。
+我曾在 Markdown 作者最早发布的 Perl 脚本工具 [Markdown.pl 1.0.1](https://daringfireball.net/projects/downloads/Markdown_1.0.1.zip) 的基础上，做了一个代码改动，使得 Markdown 解析器在遇到第一行尾和下一行首都是中日韩全角字符的时候，自动删除两行之间的换行，这样就将同一段落的中文内容不加空格地连接在一起了。同时，我也考虑了第一行尾或下一行首同时是英文半角字符的情况，这种情况下，换行（或最终渲染出来的空格）还是需要保留的。
 
 我对 Markdown.pl 1.0.1 加以修改以支持中日韩全角字符的代码发布在 [markdown-cjk](https://github.com/wixette/my-writing-toolchain/tree/master/markdown_cjk)，其中也包括二者之间差异的 diff 文件。
 
-喜欢原生 Markdown.pl 的同学可以使用这个工具来处理分行的中文段落。
+喜欢原生 Markdown.pl 的同学可以用这个工具来处理分行的中文段落。
 
 #### 方案 2
 
@@ -68,17 +69,17 @@
 pandoc -f markdown_strict+east_asian_line_breaks input.md
 ```
 
-大多数情况下，推荐使用 pandoc。但 pandoc 在处理行尾、行首有英文半角字符时的规则，可能和有些人的期望不符，这时可以尝试上面提到的 `markdown-cjk`。
+大多数情况下，推荐使用 pandoc。但 pandoc 在处理行尾、行首有英文半角字符时的规则，可能和有些人的期望不符，这时可以尝试上面提到的 [markdown-cjk](https://github.com/wixette/my-writing-toolchain/tree/master/markdown_cjk)。
 
 ## 文本编辑器
 
-任何一个用着顺手，能编辑纯文本的编辑器都可以胜任 Markdown 格式的写作。Windows、MacOS、Linux 等操作系统上的记事本，网页里的编辑框，各种在线文档类的笔记工具、写作平台、微信小程序，手机上的记事本，都能圆满完成写作工作。当然，对程序员来说最理想的还是那些平常用来写程序的工具软件。
+任何一个用着顺手，能编辑纯文本的编辑器都可以胜任 Markdown 格式的写作。Windows、MacOS、Linux 等操作系统上的记事本，网页里的编辑框，各种在线文档类的笔记工具、写作平台、微信小程序，手机上的记事本、备忘录，都能圆满完成写作工作。
 
-传统程序员有两大“宗教”——Vim 和 Emacs。我是 Emacs 党，但从不说 Vim 的坏话。所以，用 Vim 写作还是用 Emacs 写作，完全看大家的心情就好。最近我还比较喜欢超轻量级的 nano，做些短平快的事情特别合适。Windows 上的 Notepad++ 也很棒。其他诸如 VS Code、Eclipse、Xcode 之类，都显得略重了些，不过也足以胜任写作任务。
+当然，对程序员来说最理想的还是那些平常用来写程序的工具软件。传统程序员有两大派别——Vim 党和 Emacs 党。我是 Emacs 党，但从不说 Vim 的坏话。所以，用 Vim 写作还是用 Emacs 写作，完全看大家的心情就好。最近我还比较喜欢超轻量级的 nano，做些短平快的事情特别合适。Windows 上的 Notepad++ 也很棒。其他诸如 VS Code、Eclipse、Xcode 之类，都显得略重了些，不过也足以胜任写作任务。
 
-各种代码编辑器都能针对 Markdown 中的不同类型内容，用不同颜色或字体显示。我在 Emacs 里会缺省安装并打开 [markdown-mode](https://jblevins.org/projects/markdown-mode/)。
+各种代码编辑器都能针对 Markdown 中的不同样式，用不同颜色或字体显示。比如我在 Emacs 里会缺省安装并打开 [markdown-mode](https://jblevins.org/projects/markdown-mode/)。
 
-其他还有一些小技巧，比如我在 Emacs 里会为中文写作的 Markdown 文本或其他纯文本设置较大的字号，而为 C++、JavaScript、Python 等代码编辑设置较小的字号，两者之间相差两到三档。这大概是因为写作文字时更希望关注某些聚焦的内容，而写代码时更希望一眼看到更多的信息量吧。
+其他还有一些小技巧。我在 Emacs 里会为中文写作的 Markdown 文本或其他纯文本设置较大的字号，而为 C++、JavaScript、Python 等代码编辑设置较小的字号，两者之间相差两到三档。这大概是因为写作文字时更希望聚焦核心内容，而写代码时更希望一眼看到更多信息吧。
 
 我在 Emacs 里做的与中文写作有关的设置，可以参见我的 [Emacs 启动文件](https://github.com/wixette/my-writing-toolchain/blob/master/emacs/my-emacs-init-file.el)。
 
@@ -94,31 +95,34 @@ pandoc -f markdown_strict+east_asian_line_breaks input.md
 
 <img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/git_versions.png" width="400">
 
-我们为每一个版本所做的增、删、改，都清楚地记录在案，随时可以调阅、复原。甚至可以使用分支同时写作不同构思的内容（比如为一篇小说同时写作大团圆结局和“死光光”结局），然后在需要时，选用不同的构思。
+我们为每一个版本所做的增、删、改，都清楚地记录在案，随时可以调阅、复原。甚至可以使用 Git 分支来同时写作不同构思的内容——比如为一篇小说同时写作大团圆结局和“死光光”结局，然后在需要时，选用不同的结局。
 
 需要 Git 入门的，推荐知乎问题[GitHub 入门方法有哪些？](https://www.zhihu.com/question/29929269)下的高票答案。
 
-用了 Git，当然要接着用 Github——所谓的[全球最大同性交友网站](https://zhuanlan.zhihu.com/p/35618222)。以前 Github 是为开源社区服务的，所有免费进驻的个人项目都要开放给大家浏览或下载，这件事对于在创作时非常注意保密的内容创作者来说是不友好的。好在 Github 已经允许我们管理私有项目，不需要每个项目都公开。当时传出这个好消息时，我第一时间就把所有个人写作内容移到了 Github 的私有项目里。使用 Github 的另一个好处是，所有写作内容都随时和云端同步，你从任何地方的任何一台设备上，都可以继续你的写作过程，不用带着 U 盘满世界跑。
+用了 Git，当然要接着用 Github——所谓的[全球最大同性交友网站](https://zhuanlan.zhihu.com/p/35618222)。以前 Github 是为开源社区服务的，所有免费进驻的个人项目都要开放给大家浏览或下载，这件事对于在创作时非常注意保密的内容创作者来说是不可接受的，我以前就被迫运营自己的 Git 服务器。好在今天的 Github 已经允许我们管理私有项目，不需要每个项目都公开。Git 宣布这个好消息时，我第一时间就把所有个人写作内容移到了 Github 的私有项目。使用 Github 的另一个好处是，所有写作内容都随时和云端同步，你从任何地方的任何一台设备上，都可以继续你的写作过程，不用带着 U 盘满世界跑，也不必担心丢电脑。
 
 感谢 Github，也顺便宣传一下 Github 的吉祥物 [Octodex](https://octodex.github.com/)：
 
 <img src="https://octodex.github.com/images/original.png" width="300">
 
-## Diff 版本差异比较
+## 版本差异比较
 
-管理不同版本时，查看两个或多个版本之间的差异是程序员最熟悉的任务之一。但查看两份代码的差异，和查看两个版本中文文章间的差异，还是挺不一样的两件事。代码的基本单元是“行”和“符号”，而中文文章的基本单元是“段”“句”“词”“字”。比较两个版本的代码时，大多数时候都是一行对一行的比较。而比较两个版本中文文章时，一段对一段的比较显得跨度太大，很难理清楚其中的差异。
+管理不同版本时，查看两个或多个版本之间的差异是程序员最熟悉的任务之一。但查看两份代码的差异，和查看两个版本中文文章间的差异，还是挺不一样的两件事：
+
+* 代码的基本单元是“行”和“符号”，而中文文章的基本单元是“段”“句”“词”“字”。
+* 比较两个版本的代码时，大多数时候都是一行对一行的比较。而比较两个版本中文文章时，一段对一段或一行对一行的比较就显得跨度太大了，很难理清楚其中的差异。
 
 比如，对下面这个版本改动，Git 缺省的 diff 工具只能笼统显示两段是不同的，无法更进一步显示两段之间哪里不同：
 
 <img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/git_diff.png" width="600">
 
-Github 网页版使用的 diff 工具稍好一些，可以在段内不换行的中文里找出一些具体的差异位置，但这些差异仍然没有具体到能体现最小区别的字词级别，例如两个版本第一句话中本来只有“示例”和“测试”的区别，但 Github 用深红、深绿标注的差异部分却扩大到了“示例的中文文本”和“测试的中文文本”。至于分行的中文段落，Github diff 就更是无法区分其中的差异位置了。见下图：
+Github 网页版使用的 diff 工具稍好一些，可以在段内不换行的中文里找出一些具体的差异位置，但这些差异仍然没有具体到能体现最小区别的字词级别，例如两个版本第一句话中本来只有“示例”和“测试”的区别，但 Github 用深红、深绿标注的差异部分却扩大到了“示例的中文文本”和“测试的中文文本”。至于分行的中文段落，Github diff 就更无法区分其中的差异位置了。见下图：
 
 <img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/github_diff.png" width=800>
 
-Git 和 Github 的 diff 工具在粒度上是无法满足中文写作的要求的。有不少好的 diff 工具可以在更细的粒度上对文本内容进行比较。其中有一些是收费的商业产品。免费的工具里，我自己简单使用 Google 开源的 [diff-match-patch](https://github.com/google/diff-match-patch) 代码库，并在这个代码库的基础上包装了一个 Python 命令行小工具，叫 [googdiff](https://github.com/wixette/my-writing-toolchain/tree/master/googdiff)。
+Git 和 Github 的 diff 工具在粒度上是无法满足中文写作的要求的。有不少好的 diff 工具可以在更细的粒度上对文本内容进行比较。其中有一些是收费的商业产品。免费的工具里，我自己简单使用 Google 开源的 [diff-match-patch](https://github.com/google/diff-match-patch) 代码库，并在其基础上包装了一个 Python 命令行小工具，叫 [googdiff](https://github.com/wixette/my-writing-toolchain/tree/master/googdiff)。
 
-这个工具可以单独使用，也可以嵌入 Git 命令行使用。要安装这个工具，可以使用 pip：
+我发布的这个小工具可以单独使用，也可以嵌入 Git 命令行使用。要安装这个工具，可以：
 
 ```
 pip3 install googdiff
@@ -137,7 +141,7 @@ git difftool -y --extcmd=googdiff
 
 ```
 
-或者显示两个 tag 之间某个文件的版本变化：
+或者显示两个 tag 之间某文件的版本变化：
 
 ```
 git difftool -y --extcmd=googdiff after before -- samples/diff_example_chinese.txt
