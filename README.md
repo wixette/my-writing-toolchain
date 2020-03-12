@@ -66,6 +66,12 @@
 在 pandoc 中打开中日韩分行插件并输出 HTML 格式的命令写法是：
 
 ```
+pandoc -f markdown+east_asian_line_breaks input.md
+```
+
+或：
+
+```
 pandoc -f markdown_strict+east_asian_line_breaks input.md
 ```
 
