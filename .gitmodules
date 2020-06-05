@@ -1,0 +1,3 @@
+[submodule "googdiff"]
+	path = googdiff
+	url = https://github.com/wixette/googdiff
