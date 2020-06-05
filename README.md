@@ -126,7 +126,7 @@ Github 网页版使用的 diff 工具稍好一些，可以在段内不换行的�
 
 <img src="https://raw.githubusercontent.com/wixette/my-writing-toolchain/master/images/github_diff.png" width=800>
 
-Git 和 Github 的 diff 工具在粒度上是无法满足中文写作的要求的。有不少好的 diff 工具可以在更细的粒度上对文本内容进行比较。其中有一些是收费的商业产品。免费的工具里，我自己简单使用 Google 开源的 [diff-match-patch](https://github.com/google/diff-match-patch) 代码库，并在其基础上包装了一个 Python 命令行小工具，叫 [googdiff](https://github.com/wixette/my-writing-toolchain/tree/master/googdiff)。
+Git 和 Github 的 diff 工具在粒度上是无法满足中文写作的要求的。有不少好的 diff 工具可以在更细的粒度上对文本内容进行比较。其中有一些是收费的商业产品。免费的工具里，我自己简单使用 Google 开源的 [diff-match-patch](https://github.com/google/diff-match-patch) 代码库，并在其基础上包装了一个 Python 命令行小工具，叫 [googdiff](https://github.com/wixette/googdiff)。
 
 我发布的这个小工具可以单独使用，也可以嵌入 Git 命令行使用。要安装这个工具，可以：
 
@@ -134,10 +134,16 @@ Git 和 Github 的 diff 工具在粒度上是无法满足中文写作的要求�
 pip3 install googdiff
 ```
 
-安装后，可以用下面的命令行比较两个本地文件，googdiff 缺省会打开浏览器来展示比较结果：
+安装后，可以用下面的命令行比较两个本地文件，googdiff 既可以在命令行终端比较结果：
 
 ```
 googdiff samples/diff_example_english_pair_01.txt samples/diff_example_english_pair_02.txt
+```
+
+也可以打开浏览器来展示比较结果：
+
+```
+googdiff -b samples/diff_example_english_pair_01.txt samples/diff_example_english_pair_02.txt
 ```
 
 也可以将 googdiff 与 git 集成使用，即，用 googdiff 来展示 git diff 的结果，像这样：
