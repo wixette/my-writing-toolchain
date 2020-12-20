@@ -122,13 +122,13 @@ pandoc -f markdown_strict+east_asian_line_breaks input.md
 
 <img src="images/git_diff.png" width="600">
 
-Github 网页版使用的 diff 工具稍好一些，可以在段内不换行的中文里找出一些具体的差异位置，但这些差异仍然没有具体到能体现最小区别的字词级别，例如两个版本第一句话中本来只有“示例”和“测试”的区别，但 Github 用深红、深绿标注的差异部分却扩大到了“示例的中文文本”和“测试的中文文本”。至于分行的中文段落，Github diff 就更无法区分其中的差异位置了。见下图：
+Git 命令的参数 `--word-diff=color` 或 `--color-words` 可以将比较的粒度细化到英文的词边界，但对中文来说，得到的差异边界有时候并不是最小的粒度。Github 网页版使用的 diff 工具类似 Git 加参数 `--word-diff=color` 的效果，见下图：
 
 <img src="images/github_diff.png" width=800>
 
-Git 和 Github 的 diff 工具在粒度上是无法满足中文写作的要求的。有不少好的 diff 工具可以在更细的粒度上对文本内容进行比较。其中有一些是收费的商业产品。免费的工具里，我自己简单使用 Google 开源的 [diff-match-patch](https://github.com/google/diff-match-patch) 代码库，并在其基础上包装了一个 Python 命令行小工具，叫 [googdiff](https://github.com/wixette/googdiff)。
+个人感觉 Git 和 Github 的 diff 工具在粒度上无法满足中文写作的要求。有不少好的 diff 工具可以在更细的粒度上对文本内容进行比较。其中有一些是收费的商业产品。免费的工具里，VS Code 内置的比较工具很不错。如果不在 VS Code 环境内，我自己会使用 Google 开源的 [diff-match-patch](https://github.com/google/diff-match-patch) 代码库，我还在其基础上包装了一个 Python 命令行小工具，叫 [googdiff](https://github.com/wixette/googdiff)。
 
-我发布的这个小工具可以单独使用，也可以嵌入 Git 命令行使用。要安装这个工具，可以：
+这个小工具可以单独使用，也可以嵌入 Git 命令行使用。要安装这个工具，可以：
 
 ```
 pip3 install googdiff
